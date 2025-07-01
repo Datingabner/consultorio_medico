@@ -15,10 +15,10 @@ public interface IDoctorService {
 	// void addDoctor(Doctor doctor);
 	// void updateDoctor(Doctor doctor);
 	// void deleteDoctor(Integer id);
-	List<Doctor> getAllDoctors();
-	Optional<Doctor> getDoctorById(int id_doctor);
+	List<Doctor> getTodosLosDoctores();
+	Optional<Doctor> getDoctorPorId(int id_doctor);
 	Doctor addDoctor(Doctor doctor);
 	Doctor updateDoctor(Doctor doctor);
 	void deleteDoctor(int id_doctor);
-
+	
 }
