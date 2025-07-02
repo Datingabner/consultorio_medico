@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.consultori.modelo.Consulta;
+import com.consultori.modelo.Doctor;
 import com.consultori.repository.ConsultaRepository;
 
 @Service
@@ -43,5 +44,12 @@ public class ConsultaServiceImpl implements IConsultaService{
 	public List<Consulta> getAllConsultas() {
 		return consultaRepository.findAll();
 	}
+
+	@Override
+	public List<Consulta> getAllConsultasByIdDoctor(Doctor idDoctor) {
+		return consultaRepository.findByDoctor(idDoctor);
+	}
+
+	
 	
 }

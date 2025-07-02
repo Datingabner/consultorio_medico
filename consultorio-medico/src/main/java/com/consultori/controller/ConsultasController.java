@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.consultori.Service.ConsultaServiceImpl;
+import com.consultori.Service.DoctorServiceImpl;
 import com.consultori.modelo.Consulta;
+import com.consultori.modelo.ConsultaDTO;
+import com.consultori.modelo.Doctor;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +40,9 @@ public class ConsultasController {
 	@Autowired
 	private ConsultaServiceImpl consultaService;
 	
+	@Autowired
+	private DoctorServiceImpl doctorService;
+	
 	// Puedes agregar métodos aquí para manejar las consultas, como obtener todas las consultas,
 	@GetMapping("/ver-consultas")
 	public List<Consulta> getConsultas() {
@@ -44,9 +50,15 @@ public class ConsultasController {
 	}
 	
 	@PostMapping("/agregar-consulta")
-	public ResponseEntity<Consulta> postAgregarConsulta(@RequestBody Consulta consulta) {
-		consulta=consultaService.addConsulta(consulta);
-		return new ResponseEntity<Consulta> (consulta,HttpStatus.CREATED);
+	public ResponseEntity<Consulta> postAgregarConsulta(@RequestBody ConsultaDTO consultaDTO) {
+		Consulta consulta=new Consulta();
+		consulta.setId_paciente(consultaDTO.getId_paciente());
+		consulta.setFecha_hora(consultaDTO.getFecha_hora());
+		consulta.setEstado(consultaDTO.getEstado());
+		Doctor doctor= (doctorService.getDoctorPorId(consultaDTO.getId_doctor()).get());
+		consulta.setId_doctor(doctor);
+		Consulta savedConsulta = consultaService.addConsulta(consulta);
+		return new ResponseEntity<Consulta> (savedConsulta,HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/ver-consultas/{id}")
@@ -73,7 +85,11 @@ public class ConsultasController {
 		}else {
 			return ResponseEntity.notFound().build();
 		}
-		
+	}
+	
+	@GetMapping("/agenda/{idDoctor}")
+	public List<Consulta> getFechaConsultaPorDoctor(@PathVariable Doctor idDoctor){
+	return consultaService.getAllConsultasByIdDoctor(idDoctor);
 	}
 	
 	
