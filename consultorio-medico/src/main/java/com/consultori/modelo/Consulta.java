@@ -23,8 +23,9 @@ public class Consulta {
     @JoinColumn(name = "ID_DOCTOR", referencedColumnName = "ID_DOCTOR")
 	private Doctor doctor;
 	
-	@Column(name = "ID_PACIENTE")
-	private int id_paciente;
+	@ManyToOne
+	@JoinColumn(name = "ID_PACIENTE", referencedColumnName = "ID_PACIENTE")
+	private Paciente paciente;
 	
 	@Column(name = "FECHA_HORA")
 	private LocalDateTime fecha_hora;
@@ -37,11 +38,11 @@ public class Consulta {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Consulta(int id_consulta, Doctor id_doctor, int id_paciente, LocalDateTime fecha_hora, String estado) {
+	public Consulta(int id_consulta, Doctor id_doctor, Paciente paciente, LocalDateTime fecha_hora, String estado) {
 		super();
 		this.id_consulta = id_consulta;
 		this.doctor = id_doctor;
-		this.id_paciente = id_paciente;
+		this.paciente = paciente;
 		this.fecha_hora = fecha_hora;
 		this.estado = estado;
 	}
@@ -62,12 +63,12 @@ public class Consulta {
 		this.doctor = id_doctor;
 	}
 
-	public int getId_paciente() {
-		return id_paciente;
+	public Paciente getPaciente() {
+		return paciente;
 	}
 
-	public void setId_paciente(int id_paciente) {
-		this.id_paciente = id_paciente;
+	public void setId_paciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 
 	public LocalDateTime getFecha_hora() {

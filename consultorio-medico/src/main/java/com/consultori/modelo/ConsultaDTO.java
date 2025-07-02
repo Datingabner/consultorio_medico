@@ -3,6 +3,7 @@ package com.consultori.modelo;
 import java.time.LocalDateTime;
 
 public class ConsultaDTO {
+	private Integer id_consulta;
 	private Integer id_doctor;
 	private LocalDateTime fecha_hora;
 	private String estado;
@@ -11,12 +12,20 @@ public class ConsultaDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ConsultaDTO(Integer id_doctor, LocalDateTime fecha_hora, String estado, Integer id_paciente) {
+	public ConsultaDTO(Integer id_consulta, Integer id_doctor, LocalDateTime fecha_hora, String estado,
+			Integer id_paciente) {
 		super();
+		this.id_consulta = id_consulta;
 		this.id_doctor = id_doctor;
 		this.fecha_hora = fecha_hora;
 		this.estado = estado;
 		this.id_paciente = id_paciente;
+	}
+	public Integer getId_consulta() {
+		return id_consulta;
+	}
+	public void setId_consulta(Integer id_consulta) {
+		this.id_consulta = id_consulta;
 	}
 	public Integer getId_doctor() {
 		return id_doctor;

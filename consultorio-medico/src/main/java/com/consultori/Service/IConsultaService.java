@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.consultori.modelo.Consulta;
+import com.consultori.modelo.ConsultaDTO;
 import com.consultori.modelo.Doctor;
 
 public interface IConsultaService {
@@ -14,4 +15,6 @@ public interface IConsultaService {
 	public Optional<Consulta> getConsultaById(int id_consulta);
 	public List<Consulta> getAllConsultas();
 	public List<Consulta> getAllConsultasByIdDoctor(Doctor idDoctor);
+	public List<ConsultaDTO> getConsultasSimplificadas();
+	public Optional<ConsultaDTO> getConsultaSimplificadaById(int id_consulta);
 }

@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.consultori.Service.ConsultaServiceImpl;
 import com.consultori.Service.DoctorServiceImpl;
+import com.consultori.Service.PacienteServiceImpl;
 import com.consultori.modelo.Consulta;
 import com.consultori.modelo.ConsultaDTO;
 import com.consultori.modelo.Doctor;
+import com.consultori.modelo.Paciente;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,27 +45,31 @@ public class ConsultasController {
 	@Autowired
 	private DoctorServiceImpl doctorService;
 	
+	@Autowired
+	private PacienteServiceImpl pacienteService;
+	
 	// Puedes agregar métodos aquí para manejar las consultas, como obtener todas las consultas,
 	@GetMapping("/ver-consultas")
-	public List<Consulta> getConsultas() {
-		return consultaService.getAllConsultas();
+	public List<ConsultaDTO> getConsultas() {
+		return consultaService.getConsultasSimplificadas();
 	}
 	
 	@PostMapping("/agregar-consulta")
 	public ResponseEntity<Consulta> postAgregarConsulta(@RequestBody ConsultaDTO consultaDTO) {
 		Consulta consulta=new Consulta();
-		consulta.setId_paciente(consultaDTO.getId_paciente());
 		consulta.setFecha_hora(consultaDTO.getFecha_hora());
 		consulta.setEstado(consultaDTO.getEstado());
 		Doctor doctor= (doctorService.getDoctorPorId(consultaDTO.getId_doctor()).get());
+		Paciente paciente=pacienteService.getPacienteById(consultaDTO.getId_paciente()).get();
 		consulta.setId_doctor(doctor);
+		consulta.setId_paciente(paciente);
 		Consulta savedConsulta = consultaService.addConsulta(consulta);
 		return new ResponseEntity<Consulta> (savedConsulta,HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/ver-consultas/{id}")
-	public Optional<Consulta> getConsultaById(@RequestParam int id) {
-		return consultaService.getConsultaById(id);
+	public Optional<ConsultaDTO> getConsultaById(@RequestParam int id) {
+		return consultaService.getConsultaSimplificadaById(id);
 	}
 	
 	@PutMapping("/editar-consulta/{id}")
